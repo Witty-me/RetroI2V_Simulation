@@ -362,39 +362,42 @@ void generate_tags(int n, case_t eval_case, int spacing)
     float final_tag_posx = 0;
     for (int i = 0; i < n; i++)
     {
-        tag_t tag;
-        memset(&tag, 0, sizeof(tag_t));
-        tag.send_start_time = TIME_INF;
-        tag.send_end_time = TIME_INF;
-        tag.check_time = tag.send_start_time;
-        tag.state = UPLINK_SEND_START;
-        tag.init_posx = TAG_SPACING_OFFSET + i * spacing;
-        tag.init_posy = 0;
-        tag.max_distance = eval_case.uplink_max_distance;
-        tag.fov = TAG_FOV / 2 * PI / 180;
-        tag.uplink_bitrate = eval_case.uplink_bitrate;
-
-        final_tag_posx = tag.init_posx;
-
-        tags.push_back(tag);
-    }
-
-    tag_t tag;
-    float base_posx = TAG_SPACING_OFFSET;
-    for (;;)
-    {
-        if (base_posx > final_tag_posx)
-        {
-            break;
-        }
         for (int j = 0; j < eval_case.collocated_tag_num; j++)
         {
-            tag.init_posx = base_posx + random() % INSERT_TAG_INTERVAL;
-            tag.max_distance = UPLINK_MAX_DISTANCE_TYPE1; //
+        tag_t tag;
+            memset(&tag, 0, sizeof(tag_t));
+            tag.send_start_time = TIME_INF;
+            tag.send_end_time = TIME_INF;
+            tag.check_time = tag.send_start_time;
+            tag.state = UPLINK_SEND_START;
+            tag.init_posx = TAG_SPACING_OFFSET + i * spacing + j * 0.01;
+            tag.init_posy = 0;
+            tag.max_distance = eval_case.uplink_max_distance;
+            tag.fov = TAG_FOV / 2 * PI / 180;
+            tag.uplink_bitrate = eval_case.uplink_bitrate;
+
+            final_tag_posx = tag.init_posx;
+
             tags.push_back(tag);
         }
-        base_posx += INSERT_TAG_INTERVAL;
     }
+
+    // tag_t tag;
+    // float base_posx = TAG_SPACING_OFFSET;
+    // for (;;)
+    // {
+    //     if (base_posx > final_tag_posx)
+    //     {
+    //         break;
+    //     }
+    //     for (int j = 0; j < eval_case.collocated_tag_num; j++)
+    //     {
+    //         tag.init_posx = base_posx + random() % INSERT_TAG_INTERVAL;
+    //         tag.max_distance = UPLINK_MAX_DISTANCE_TYPE1; //
+    //         tags.push_back(tag);
+    //     }
+    //     base_posx += INSERT_TAG_INTERVAL;
+    // }
 
     sort(tags.begin(), tags.end(), tag_cmp);
     for (int i = 0; i < tags.size(); i++)
@@ -1398,26 +1401,26 @@ void update_device(int check_index, int check_state)
 
         // tag_block_reader(tags[check_index]);
 
-        for (int i = 0; i < tags.size(); i++)
-        {
-            if (i != check_index &&
-                tags[check_index].send_start_time >= tags[i].send_start_time &&
-                tags[check_index].send_start_time < tags[i].send_end_time)
-            {
-                // save potenial collision.
-                collision_t uplink_collision;
-                uplink_collision.start_time = tags[check_index].send_start_time;
-                // for tag[check_index]
-                uplink_collision.device_index[0] = check_index;
-                uplink_collision.device_index[1] = i;
-                tags[check_index].collisions.push_back(uplink_collision);
+        // for (int i = 0; i < tags.size(); i++)
+        // {
+        //     if (i != check_index &&
+        //         tags[check_index].send_start_time >= tags[i].send_start_time &&
+        //         tags[check_index].send_start_time < tags[i].send_end_time)
+        //     {
+        //         // save potenial collision.
+        //         collision_t uplink_collision;
+        //         uplink_collision.start_time = tags[check_index].send_start_time;
+        //         // for tag[check_index]
+        //         uplink_collision.device_index[0] = check_index;
+        //         uplink_collision.device_index[1] = i;
+        //         tags[check_index].collisions.push_back(uplink_collision);
 
-                // for tag[i]
-                uplink_collision.device_index[0] = i;
-                uplink_collision.device_index[1] = check_index;
-                tags[i].collisions.push_back(uplink_collision);
-            }
-        }
+        //         // for tag[i]
+        //         uplink_collision.device_index[0] = i;
+        //         uplink_collision.device_index[1] = check_index;
+        //         tags[i].collisions.push_back(uplink_collision);
+        //     }
+        // }
     }
     break;
 
@@ -1599,12 +1602,14 @@ case_t test_case[] = {
     {500, UPLINK_MAX_DISTANCE_TYPE2, 1, 1, 0},
 #else
 #if TEST_DEF == 1
-    {1000, UPLINK_MAX_DISTANCE_TYPE3, 2, 1 + CUSTOM_OFFSET_INDEX, 0},
+    {500, UPLINK_MAX_DISTANCE_TYPE3_B500, 3, 1 + CUSTOM_OFFSET_INDEX, 1},
     // {125, UPLINK_MAX_DISTANCE_TYPE3_B125, 2, 1 + CUSTOM_OFFSET_INDEX, 0},
 #elif TEST_DEF == 2
-    {250, UPLINK_MAX_DISTANCE_TYPE3_B250, 2, 1 + CUSTOM_OFFSET_INDEX, 0},
+    {500, UPLINK_MAX_DISTANCE_TYPE3_B500, 3, 1 + CUSTOM_OFFSET_INDEX, 2},
+    // {250, UPLINK_MAX_DISTANCE_TYPE3_B250, 2, 1 + CUSTOM_OFFSET_INDEX, 0},
 #elif TEST_DEF == 3
-    {500, UPLINK_MAX_DISTANCE_TYPE3_B500, 2, 1 + CUSTOM_OFFSET_INDEX, 0},
+    {500, UPLINK_MAX_DISTANCE_TYPE3_B500, 3, 1 + CUSTOM_OFFSET_INDEX, 4},
+    // {500, UPLINK_MAX_DISTANCE_TYPE3_B500, 2, 1 + CUSTOM_OFFSET_INDEX, 0},
 #elif TEST_DEF == 4
     //{1000, UPLINK_MAX_DISTANCE_TYPE2, 2, 1, 0},
     {1000, UPLINK_MAX_DISTANCE_TYPE3, 2, 1 + CUSTOM_OFFSET_INDEX, 0},
