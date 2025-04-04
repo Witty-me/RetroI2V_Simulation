@@ -9,7 +9,7 @@ all_result = {}
 list_dirs = os.walk(sys.argv[1]) 
 for root, dirs, files in list_dirs: 
     for file_name in files:
-        if root.find("test_def") >= 0 and file_name.find("bitrate1000") >=0 and file_name.find("lane2") >= 0 and file_name.find("velocity1") >= 0 :
+        if root.find("test_def") >= 0 and file_name.find("bitrate1000") >=0 and file_name.find("lane3") >= 0 and file_name.find("velocity1") >= 0 :
             key_list = file_name.split('_')
             k = key_list[0] + '_' + key_list[4] + '_'+key_list[5].split('.')[0]
 #            spacing = int(key_list[5].split('.')[0][len("spacing"):])

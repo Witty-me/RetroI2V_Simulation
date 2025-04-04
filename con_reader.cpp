@@ -364,7 +364,7 @@ void generate_tags(int n, case_t eval_case, int spacing)
     {
         for (int j = 0; j < eval_case.collocated_tag_num; j++)
         {
-        tag_t tag;
+            tag_t tag;
             memset(&tag, 0, sizeof(tag_t));
             tag.send_start_time = TIME_INF;
             tag.send_end_time = TIME_INF;
