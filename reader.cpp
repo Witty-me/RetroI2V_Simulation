@@ -1602,40 +1602,26 @@ case_t test_case[] = {
         {500, UPLINK_MAX_DISTANCE_TYPE2, 1, 1, 0},
     #else
     #if TEST_DEF == 1
-        {1000, UPLINK_MAX_DISTANCE_TYPE3, 3, 1 + CUSTOM_OFFSET_INDEX, 1},
-        // {125, UPLINK_MAX_DISTANCE_TYPE3_B125, 2, 1 + CUSTOM_OFFSET_INDEX, 0},
-    #elif TEST_DEF == 2
-        {1000, UPLINK_MAX_DISTANCE_TYPE3, 3, 1 + CUSTOM_OFFSET_INDEX, 2},
-        // {250, UPLINK_MAX_DISTANCE_TYPE3_B250, 2, 1 + CUSTOM_OFFSET_INDEX, 0},
-    #elif TEST_DEF == 3
-        {1000, UPLINK_MAX_DISTANCE_TYPE3, 3, 1 + CUSTOM_OFFSET_INDEX, 4},
-        // {500, UPLINK_MAX_DISTANCE_TYPE3_B500, 2, 1 + CUSTOM_OFFSET_INDEX, 0},
-    #elif TEST_DEF == 4
-        //{1000, UPLINK_MAX_DISTANCE_TYPE2, 2, 1, 0},
-        {1000, UPLINK_MAX_DISTANCE_TYPE3, 2, 1 + CUSTOM_OFFSET_INDEX, 0},
-    #elif TEST_DEF == 5
-        // road traffic pattern
-        {1000, UPLINK_MAX_DISTANCE_TYPE3, 1, 0 + CUSTOM_OFFSET_INDEX, 0},
-    #elif TEST_DEF == 6
-        //    {1000, UPLINK_MAX_DISTANCE_TYPE3, 2, 1, 0},
-        {1000, UPLINK_MAX_DISTANCE_TYPE3, 3, 2 + CUSTOM_OFFSET_INDEX, 0},
-    #elif TEST_DEF == 7
-        // RetroSign Density
-        //{1000, UPLINK_MAX_DISTANCE_TYPE3, 2, 1, 0},
         {1000, UPLINK_MAX_DISTANCE_TYPE3, 2, 1 + CUSTOM_OFFSET_INDEX, 1},
-    #else
+    #elif TEST_DEF == 2
         {1000, UPLINK_MAX_DISTANCE_TYPE3, 2, 1 + CUSTOM_OFFSET_INDEX, 2},
+    #elif TEST_DEF == 3
+        {1000, UPLINK_MAX_DISTANCE_TYPE3, 2, 1 + CUSTOM_OFFSET_INDEX, 4},
+    #elif TEST_DEF == 4
+        {1000, UPLINK_MAX_DISTANCE_TYPE3, 1, 0 + CUSTOM_OFFSET_INDEX, 2},
+    #elif TEST_DEF == 5
+        {1000, UPLINK_MAX_DISTANCE_TYPE3, 3, 2 + CUSTOM_OFFSET_INDEX, 2},
     #endif
     #endif
         {0, 0, 0, 0, 0}};
 
 // int spacing_tbl[] = {25, 50, 100, 200, 400, 800, 0};
 // int spacing_tbl[] = {800, 0};
-int spacing_tbl[] = {3, 5, 10, 20, 0};
+int spacing_tbl[] = {3, 5, 10, 20, 40, 80, 0};
 int main()
 {
     //    srand(2);
-    for (int test_round = 0; test_round < 10; test_round++)
+    for (int test_round = 0; test_round < 100; test_round++)
     {
         srand(time(NULL));
         char fold_name[128] = {};
