@@ -9,9 +9,9 @@ all_result = {}
 list_dirs = os.walk(sys.argv[1]) 
 for root, dirs, files in list_dirs: 
     for file_name in files:
-        if root.find("test_def") >= 0 and file_name.find("bitrate1000") >= 0 and file_name.find("uplinkdistance81") >= 0 and\
+        if root.find("test_def") >= 0 and file_name.find("bitrate500") >= 0 and file_name.find("uplinkdistance90") >= 0 and\
         ((file_name.find("velocity0") >= 0 and file_name.find("lane1") >= 0) or (file_name.find("velocity1") >= 0 and file_name.find("lane2") >= 0) or (file_name.find("velocity2") >= 0 and file_name.find("lane3") >= 0)) and\
-        file_name.find("collocated0") >= 0 and file_name.find("downlink5000_") >= 0:
+        file_name.find("collocated2") >= 0 and file_name.find("downlink5000_") >= 0:
             key_list = file_name.split('_')
             k = key_list[2] + '_' + key_list[3] + '_'+key_list[5].split('.')[0] + '_' + key_list[6]
             f = open(os.path.join(root, file_name), "r")
